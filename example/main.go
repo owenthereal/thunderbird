@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"os"
 	"text/template"
@@ -14,7 +15,14 @@ var homeTempl = template.Must(template.ParseFiles("home.html"))
 
 func serveHome(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	homeTempl.Execute(w, r.Host)
+
+	scheme := "ws"
+	if os.Getenv("GO_ENV") == "production" {
+		scheme = "wss"
+	}
+	url := fmt.Sprintf("%s://%s/ws", scheme, r.Host)
+
+	homeTempl.Execute(w, url)
 }
 
 type RoomChannel struct {
