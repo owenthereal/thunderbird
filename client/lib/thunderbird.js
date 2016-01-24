@@ -128,7 +128,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.ws.onerror = function (evt) {};
 	      this.ws.onmessage = function (evt) {
 	        var data = JSON.parse(evt.data);
-	        if (data.command === "message") {
+	        if (data.type === "message") {
 	          self.emit(data.channel, JSON.parse(data.body));
 	        }
 	      };
