@@ -1,8 +1,8 @@
 package main
 
 import (
-	"flag"
 	"net/http"
+	"os"
 	"text/template"
 
 	"github.com/codegangsta/negroni"
@@ -10,7 +10,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-var addr = flag.String("addr", "localhost:8080", "http service address")
 var homeTempl = template.Must(template.ParseFiles("home.html"))
 
 func serveHome(w http.ResponseWriter, r *http.Request) {
@@ -30,8 +29,6 @@ func (rc *RoomChannel) Received(event thunderbird.Event) {
 }
 
 func main() {
-	flag.Parse()
-
 	tb := thunderbird.New()
 	ch := &RoomChannel{tb}
 	tb.HandleChannel("room1", ch)
@@ -48,5 +45,5 @@ func main() {
 	)
 	n.UseHandler(router)
 
-	n.Run(*addr)
+	n.Run(":" + os.Getenv("PORT"))
 }
