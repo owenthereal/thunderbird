@@ -25,14 +25,14 @@ $(function() {
       return false;
     }
 
-    conn.perform("room1", msg.val())
+    conn.perform("room", msg.val())
     msg.val("")
 
     return false
   })
 
   conn = Thunderbird.connect(getURL(), function (conn) {
-    conn.subscribe("room1", function (msg) {
+    conn.subscribe("room", function (msg) {
       appendLog($("<div/>").text(msg))
     })
   })
