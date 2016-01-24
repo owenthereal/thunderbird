@@ -136,6 +136,18 @@ do that with the `perform` method of the connection:
 conn.perform("room", msg)
 ```
 
+## Roadmap
+
+Thunderbird is under heavy development. Please be patient before it hits
+prime time :-).
+
+- [X] WebSocket HTTP handler
+- [x] Basic in memory pub/sub
+- [X] JavaScript client
+- [X] Example chat app
+- [ ] Redis pub/sub adapter
+- [ ] Postgres pub/sub adapter
+
 ## LICENSE
 
 See `LICENSE.md`.
