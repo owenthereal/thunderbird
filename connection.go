@@ -29,7 +29,7 @@ type Connection struct {
 	ws            *websocket.Conn
 	subscriptions map[string]bool
 	subMutex      sync.RWMutex
-	send          chan []byte // Buffered channel of outbound messages.
+	send          chan Event
 }
 
 // readPump pumps messages from the websocket connection to the hub.
@@ -57,18 +57,18 @@ func (c *Connection) readPump() {
 			break
 		}
 
+		log.Printf("Received event %v", event)
+
 		switch event.Command {
 		case "subscribe":
 			c.Subscribed(event.Channel)
-		case "broadcast":
-			c.tb.Broadcast(event.Channel, []byte(event.Body))
+		case "message":
+			for _, ch := range c.tb.Channels(event.Channel) {
+				ch.Received(event)
+			}
 		default:
 			log.Printf("unknown event command %s", event.Command)
 		}
-
-		fmt.Println(event)
-
-		//h.broadcast <- message
 	}
 }
 
@@ -95,14 +95,10 @@ func (c *Connection) writePump() {
 	}()
 	for {
 		select {
-		case message, ok := <-c.send:
+		case event, ok := <-c.send:
 			if !ok {
 				c.write(websocket.CloseMessage, []byte{})
 				return
-			}
-			event := Event{
-				Command: "message",
-				Body:    string(message),
 			}
 			b, err := json.Marshal(event)
 			if err != nil {

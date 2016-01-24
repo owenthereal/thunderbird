@@ -15,22 +15,28 @@ type Adapter interface {
 
 func New() *Thunderbird {
 	return &Thunderbird{
-		connections: make(map[*Connection]bool),
-		channels:    make(map[string][]ChannelHandler),
+		connections:     make(map[*Connection]bool),
+		channelHandlers: make(map[string][]ChannelHandler),
 	}
 }
 
 type Thunderbird struct {
-	channels    map[string][]ChannelHandler
-	connections map[*Connection]bool
-	connMutex   sync.RWMutex
+	channelHandlers map[string][]ChannelHandler
+	chanMutex       sync.RWMutex
+	connections     map[*Connection]bool
+	connMutex       sync.RWMutex
 }
 
-func (tb *Thunderbird) Broadcast(channel string, body []byte) {
+func (tb *Thunderbird) Broadcast(channel, body string) {
 	tb.connMutex.Lock()
 	for conn, _ := range tb.connections {
 		if conn.isSubscribedTo(channel) {
-			conn.send <- body
+			event := Event{
+				Command: "message",
+				Channel: channel,
+				Body:    body,
+			}
+			conn.send <- event
 		}
 	}
 
@@ -42,7 +48,7 @@ func (tb *Thunderbird) newConnection(ws *websocket.Conn) *Connection {
 		tb:            tb,
 		subscriptions: make(map[string]bool),
 		ws:            ws,
-		send:          make(chan []byte, 256),
+		send:          make(chan Event),
 	}
 }
 
@@ -75,9 +81,19 @@ func (tb *Thunderbird) disconnected(c *Connection) {
 }
 
 func (tb *Thunderbird) HandleChannel(channel string, handler ChannelHandler) {
-	tb.channels[channel] = append(tb.channels[channel], handler)
+	tb.chanMutex.Lock()
+	tb.channelHandlers[channel] = append(tb.channelHandlers[channel], handler)
+	tb.chanMutex.Unlock()
+}
+
+func (tb *Thunderbird) Channels(channel string) []ChannelHandler {
+	tb.chanMutex.Lock()
+	ch := tb.channelHandlers[channel]
+	tb.chanMutex.Unlock()
+
+	return ch
 }
 
 type ChannelHandler interface {
-	Receive(Event)
+	Received(Event)
 }
