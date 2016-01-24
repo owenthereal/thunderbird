@@ -105,6 +105,7 @@ func (c *Connection) writePump() {
 				return
 			}
 
+			log.Printf("Sending event %v", event)
 			if err := c.write(websocket.TextMessage, b); err != nil {
 				return
 			}
