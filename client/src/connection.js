@@ -17,18 +17,13 @@ export default class Connection extends Events.EventEmitter {
 
     this.ws = new WebSocket(this.url);
     this.ws.onopen = function(evt) {
-      console.log("connected to " + self.url)
       self.cb(self)
     }
     this.ws.onclose = function(evt) {
-      console.log("disconnected")
     }
     this.ws.onerror = function(evt) {
-      console.log("error")
     }
     this.ws.onmessage = function(evt) {
-      console.log("received message " + evt.data)
-
       var data = JSON.parse(evt.data)
       if (data.command === "message") {
         self.emit(data.channel, JSON.parse(data.body))
@@ -50,7 +45,6 @@ export default class Connection extends Events.EventEmitter {
 
   perform (channel, msg) {
     var data = { command: "message", channel: channel, body: JSON.stringify(msg) }
-    console.log(data)
     this.ws.send(JSON.stringify(data))
   }
 }
