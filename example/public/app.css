@@ -8,19 +8,21 @@ body {
   margin: 0;
   width: 100%;
   height: 100%;
-  background: gray;
+  background: #F5F5F5;
+  color: #3F3F44;
 }
 
 #log {
-  background: white;
+  background: #664A86;
   margin: 0;
   padding: 0.5em 0.5em 0.5em 0.5em;
   position: absolute;
   top: 0.5em;
   left: 0.5em;
   right: 0.5em;
-  bottom: 3em;
+  bottom: 4em;
   overflow: auto;
+  color: white;
 }
 
 #form {
