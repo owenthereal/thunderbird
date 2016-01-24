@@ -44,7 +44,7 @@ export default class Connection extends Events.EventEmitter {
   }
 
   perform (channel, msg) {
-    var data = { command: "message", channel: channel, body: JSON.stringify(msg) }
+    var data = { type: "message", channel: channel, body: JSON.stringify(msg) }
     this.ws.send(JSON.stringify(data))
   }
 }

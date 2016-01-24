@@ -32,7 +32,7 @@ func (tb *Thunderbird) Broadcast(channel, body string) {
 	for conn, _ := range tb.connections {
 		if conn.isSubscribedTo(channel) {
 			event := Event{
-				Command: "message",
+				Type:    "message",
 				Channel: channel,
 				Body:    body,
 			}

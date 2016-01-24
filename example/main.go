@@ -23,7 +23,7 @@ type RoomChannel struct {
 }
 
 func (rc *RoomChannel) Received(event thunderbird.Event) {
-	switch event.Command {
+	switch event.Type {
 	case "message":
 		rc.tb.Broadcast(event.Channel, event.Body)
 	}

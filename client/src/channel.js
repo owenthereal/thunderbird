@@ -6,7 +6,7 @@ export default class Channel {
   }
 
   subscribe () {
-    var data = { command: "subscribe", channel: this.name}
+    var data = { type: "subscribe", channel: this.name}
     this.conn.send(data)
   }
 }

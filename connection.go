@@ -59,7 +59,7 @@ func (c *Connection) readPump() {
 
 		log.Printf("Received event %v", event)
 
-		switch event.Command {
+		switch event.Type {
 		case "subscribe":
 			c.Subscribed(event.Channel)
 		case "message":
@@ -67,7 +67,7 @@ func (c *Connection) readPump() {
 				ch.Received(event)
 			}
 		default:
-			log.Printf("unknown event command %s", event.Command)
+			log.Printf("unknown event command %s", event.Type)
 		}
 	}
 }
