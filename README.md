@@ -135,3 +135,7 @@ do that with the `perform` method of the connection:
 // when enter key is pressed
 conn.perform("room", msg)
 ```
+
+## LICENSE
+
+See `LICENSE.md`.
