@@ -41,6 +41,7 @@ Here is an example of multiple channels on multiple connections:
 Let's walk through building a chat app with `Thunderbird` and understand
 how elegant the solution is. The code is available in the
 [example](https://github.com/gophergala2016/thunderbird/tree/master/example) folder.
+The example is running live [here](https://thunderbird-chat.herokuapp.com/).
 
 ### Server handling WebSocket connections
 

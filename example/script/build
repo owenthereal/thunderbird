@@ -5,4 +5,5 @@
 
 set -e
 
+go get ./...
 go build -o ./bin/thunderbird-chat
