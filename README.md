@@ -3,7 +3,7 @@
 **I'm competing at [Gopher Gala 2016](http://gophergala.com/). Please give
 this project a star and [follow me](https://github.com/jingweno) if you like what you see :beers:.**
 
-Thunderbird (a.k.a. :zap::bird:) seamlessly integrates WebSockets with your Go web application. It allows for real-time features to be written in idiomatic Go. It's a full-stack offering that provides both a client-side JavaScript framework and a server-side Go framework. Thunderbird is heavily inspired by Elixir's [Phoenix](http://www.phoenixframework.org/) and Ruby's [Action Cable](https://github.com/rails/rails/tree/master/actioncable).
+Thunderbird (a.k.a. :zap::bird:) seamlessly integrates WebSockets with your Go web application. It allows for real-time features to be written in idiomatic Go. It's a full-stack offering that provides both a client-side JavaScript framework and a server-side Go framework. Thunderbird is heavily inspired by Elixir's [Phoenix](http://www.phoenixframework.org/) and Rails' [Action Cable](https://github.com/rails/rails/tree/master/actioncable).
 
 ## How it works
 
