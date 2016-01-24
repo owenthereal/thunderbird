@@ -31,7 +31,7 @@ func (rc *RoomChannel) Received(event thunderbird.Event) {
 func main() {
 	tb := thunderbird.New()
 	ch := &RoomChannel{tb}
-	tb.HandleChannel("room1", ch)
+	tb.HandleChannel("room", ch)
 
 	router := mux.NewRouter()
 	router.HandleFunc("/", serveHome).Methods("GET")
