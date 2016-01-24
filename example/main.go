@@ -5,9 +5,9 @@ import (
 	"os"
 	"text/template"
 
-	"github.com/codegangsta/negroni"
 	"github.com/gophergala2016/thunderbird"
-	"github.com/gorilla/mux"
+	"github.com/gophergala2016/thunderbird/Godeps/_workspace/src/github.com/codegangsta/negroni"
+	"github.com/gophergala2016/thunderbird/Godeps/_workspace/src/github.com/gorilla/mux"
 )
 
 var homeTempl = template.Must(template.ParseFiles("home.html"))
