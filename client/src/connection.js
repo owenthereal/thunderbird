@@ -1,16 +1,19 @@
 import Channel from "./channel"
 
 export default class Connection {
-  constructor(url) {
+  constructor(url, cb) {
     this.url = url
+    this.cb = cb
     this.connect()
   }
 
   connect () {
-    this.conn = new WebSocket(this.url);
     var self = this
+
+    this.conn = new WebSocket(this.url);
     this.conn.onopen = function(evt) {
       console.log("connected to " + self.url)
+      self.cb(self)
     }
     this.conn.onclose = function(evt) {
       console.log("disconnected")
@@ -23,7 +26,13 @@ export default class Connection {
     }
   }
 
-  subscribe (channel) {
-    return new Channel(channel)
+  subscribe (channel, cb) {
+    var data = { command: "subscribe", channel: channel}
+    this.conn.send(JSON.stringify(data))
+  }
+
+  trigger (channel, evt) {
+    var data = { command: "broadcast", channel: channel, body: JSON.stringify(evt) }
+    this.conn.send(JSON.stringify(data))
   }
 }
