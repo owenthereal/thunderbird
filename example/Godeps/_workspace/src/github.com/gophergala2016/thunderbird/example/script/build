@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-# Usage: script/build
-#
-# Builds example
-
-set -e
-
-go build -o ./bin/chat
