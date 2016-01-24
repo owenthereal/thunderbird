@@ -2,7 +2,6 @@ package thunderbird
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"sync"
 	"time"
@@ -41,7 +40,6 @@ func (c *Connection) readPump() {
 	c.ws.SetReadLimit(maxMessageSize)
 	c.ws.SetReadDeadline(time.Now().Add(pongWait))
 	c.ws.SetPongHandler(func(d string) error {
-		fmt.Println(d)
 		c.ws.SetReadDeadline(time.Now().Add(pongWait))
 		return nil
 	})
@@ -50,7 +48,6 @@ func (c *Connection) readPump() {
 		err := c.ws.ReadJSON(&event)
 
 		if err != nil {
-			fmt.Println(err)
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway) {
 				log.Printf("error: %v", err)
 			}
