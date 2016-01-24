@@ -1,1 +1,1 @@
-web: ./bin/chat
+web: ./bin/thunderbird-chat

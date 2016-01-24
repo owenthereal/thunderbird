@@ -5,4 +5,4 @@
 
 set -e
 
-go build -o ./bin/chat
+go build -o ./bin/thunderbird-chat
