@@ -30,7 +30,7 @@ Here is an example of multiple channels on multiple connections:
                 │                               │                │
                 ▼                               └────────────────┘
           ┌──────────┐                                   ▲
-          │          │           Connection1             │
+          │          │           Connection3             │
           │ Client2  │◀───────────[channel3]─────────────┘
           │          │
           └──────────┘
