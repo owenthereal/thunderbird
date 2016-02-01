@@ -87,14 +87,14 @@ messages to all consumers of the channel. We do this by calling
 
 ```go
 type RoomChannel struct {
-	  tb *thunderbird.Thunderbird
+    tb *thunderbird.Thunderbird
 }
 
 func (rc *RoomChannel) Received(event thunderbird.Event) {
-	  switch event.Type {
-	  case "message":
-		  rc.tb.Broadcast(event.Channel, event.Body)
-	  }
+    switch event.Type {
+    case "message":
+      rc.tb.Broadcast(event.Channel, event.Body)
+    }
 }
 ```
 
@@ -134,6 +134,27 @@ do that with the `perform` method of the connection:
 ```js
 // when enter key is pressed
 conn.perform("room", msg)
+```
+
+### Client's host is different than server
+
+If client is hosted on another server than Thunderbird runs, most likely they have different hostnames.  
+In such a case, you should use `Thunderbird.HTTPHandlerWithUpgrader()` and define your custom Origin header validator.
+
+```go
+func main() {
+  tb := thunderbird.New()
+  tbUpgrader := websocket.Upgrader{
+    ReadBufferSize:  1024,
+    WriteBufferSize: 1024,
+    CheckOrigin: func(r *http.Request) bool {
+      return true
+    },
+  }
+
+  mux := http.NewServeMux()
+  mux.Handle("/ws", tb.HTTPHandlerWithUpgrader(tbUpgrader))
+}
 ```
 
 ## Roadmap
