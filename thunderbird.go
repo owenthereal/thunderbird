@@ -62,6 +62,10 @@ func (tb *Thunderbird) HTTPHandler() http.Handler {
 	}
 }
 
+func (tb *Thunderbird) HTTPHandlerWithUpgrader(upgrader websocket.Upgrader) http.Handler {
+	return &httpHandler{tb: tb, upgrader: upgrader}
+}
+
 func (tb *Thunderbird) connected(c *Connection) {
 	tb.connMutex.Lock()
 	tb.connections[c] = true
